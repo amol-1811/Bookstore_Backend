@@ -16,6 +16,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RepositoryLayer.Context;
+using ManagerLayer.Interfaces;
+using ManagerLayer.Services;
+using RepositoryLayer.Interfaces;
+using RepositoryLayer.Services;
 
 namespace Bookstore
 {
@@ -34,6 +38,10 @@ namespace Bookstore
             services.AddControllers();
             services.AddDbContext<BookstoreDBContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:DbConn"]));
+            services.AddScoped<IAdminManager, AdminManager>();
+            services.AddScoped<IAdminRepo, AdminRepo>();
+            services.AddScoped<MailService>();
+            services.AddScoped<TokenService>();
 
             services.AddSwaggerGen(
                 option =>
