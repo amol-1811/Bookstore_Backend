@@ -20,6 +20,7 @@ using ManagerLayer.Interfaces;
 using ManagerLayer.Services;
 using RepositoryLayer.Interfaces;
 using RepositoryLayer.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace Bookstore
 {
@@ -40,7 +41,8 @@ namespace Bookstore
                 options.UseSqlServer(Configuration["ConnectionStrings:DbConn"]));
             services.AddScoped<IAdminManager, AdminManager>();
             services.AddScoped<IAdminRepo, AdminRepo>();
-            services.AddScoped<MailService>();
+            services.AddScoped<IUserRepo,  UserRepo>();
+            services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<TokenService>();
 
             services.AddSwaggerGen(

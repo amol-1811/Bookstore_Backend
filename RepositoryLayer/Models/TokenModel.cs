@@ -6,6 +6,6 @@ namespace RepositoryLayer.Models
 {
     public class TokenModel
     {
-        public string AccessToken { get; set; }
+        public string Token { get; set; }
     }
 }

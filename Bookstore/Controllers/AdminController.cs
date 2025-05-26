@@ -16,16 +16,13 @@ namespace Bookstore.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IAdminManager _adminManager;
-        private readonly MailService _mailService;
-        public AdminController(IAdminManager adminManager, MailService mailService)
+        public AdminController(IAdminManager adminManager)
         {
             _adminManager = adminManager;
-            _mailService = mailService;
-
         }
 
-        [HttpPost("register")]
-        public  IActionResult Register([FromBody] AdminModel model)
+        [HttpPost]
+        public  IActionResult Register([FromBody] AdminRegisterModel model)
         {
             try
             {
@@ -46,7 +43,7 @@ namespace Bookstore.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] AdminModel model)
+        public IActionResult Login([FromBody] AdminLoginModel model)
         {
             try
             {

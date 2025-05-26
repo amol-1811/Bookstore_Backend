@@ -10,7 +10,7 @@ using RepositoryLayer.Context;
 using RepositoryLayer.EncodePassword;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interfaces;
-using RepositoryLayer.Migrations;
+using RepositoryLayer.Migrations;   
 using RepositoryLayer.Models;
 
 namespace RepositoryLayer.Services
@@ -28,12 +28,14 @@ namespace RepositoryLayer.Services
             this._tokenService = _tokenService;
         }
         
-        public AdminEntity Register(AdminModel model)
+        public AdminEntity Register(AdminRegisterModel model)
         {
             var admin = new AdminEntity
             {
+                FullName = model.FullName,
                 Email = model.Email,
                 Password = EncryptPass.EncodePasswordToBase64(model.Password),
+                PhoneNumber = model.PhoneNumber,
                 Role = "Admin"
             };
 
@@ -42,7 +44,7 @@ namespace RepositoryLayer.Services
             return admin;
         }
 
-        public string Login(AdminModel model)
+        public string Login(AdminLoginModel model)
         {
             var admin = _dbContext.Admins.FirstOrDefault(x => x.Email == model.Email && x.Password == EncryptPass.EncodePasswordToBase64(model.Password));
             if (admin != null)
