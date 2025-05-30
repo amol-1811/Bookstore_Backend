@@ -29,7 +29,7 @@ namespace Bookstore.Controllers
                 var result = _adminManager.Register(model);
                 if(result != null)
                 {
-                    return Ok(new ResponseModel<AdminEntity> { IsSuccess = true, Message = "Admin registered successfully", Data = result });
+                    return Ok(new ResponseModel<UserEntity> { IsSuccess = true, Message = "Admin registered successfully", Data = result });
                 }
                 else
                 {
@@ -47,7 +47,7 @@ namespace Bookstore.Controllers
         {
             try
             {
-                var result = _adminManager.Login(model);
+                var result = _adminManager.Login(model, "Admin");
                 if (result != null)
                 {
                     return Ok(new ResponseModel<string> { IsSuccess = true, Message = "Admin logged in successfully", Data = result });

@@ -8,8 +8,8 @@ namespace ManagerLayer.Interfaces
 {
     public interface IAdminManager
     {
-        public AdminEntity Register(AdminRegisterModel model);
-        public string Login(AdminLoginModel model);
+        public UserEntity Register(AdminRegisterModel model);
+        public string Login(AdminLoginModel model, string role);
         public ForgotPasswordModel ForgotPassword(string email);
         public bool ResetPassword(string email, ResetPasswordModel model);
     }

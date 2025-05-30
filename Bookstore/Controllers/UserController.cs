@@ -47,7 +47,8 @@ namespace Bookstore.Controllers
         {
             try
             {
-                var result = userManager.Login(model);
+                var result = userManager.Login(model, "User");
+
                 if (result != null)
                 {
                     return Ok(new ResponseModel<UserLoginResponseModel> { IsSuccess = true, Message = "User logged in successfully", Data = result });

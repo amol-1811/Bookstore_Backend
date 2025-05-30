@@ -28,9 +28,9 @@ namespace RepositoryLayer.Services
             this._tokenService = _tokenService;
         }
         
-        public AdminEntity Register(AdminRegisterModel model)
+        public UserEntity Register(AdminRegisterModel model)
         {
-            var admin = new AdminEntity
+            var admin = new UserEntity()
             {
                 FullName = model.FullName,
                 Email = model.Email,
@@ -39,17 +39,17 @@ namespace RepositoryLayer.Services
                 Role = "Admin"
             };
 
-            _dbContext.Admins.Add(admin);
+            _dbContext.Users.Add(admin);
             _dbContext.SaveChanges();
             return admin;
         }
 
-        public string Login(AdminLoginModel model)
+        public string Login(AdminLoginModel model, string role)
         {
-            var admin = _dbContext.Admins.FirstOrDefault(x => x.Email == model.Email && x.Password == EncryptPass.EncodePasswordToBase64(model.Password));
+            var admin = _dbContext.Users.FirstOrDefault(x => x.Role == role && x.Email == model.Email && x.Password == EncryptPass.EncodePasswordToBase64(model.Password));
             if (admin != null)
             {
-                var token = _tokenService.GenerateToken(admin.Email, admin.AdminId, admin.Role);
+                var token = _tokenService.GenerateToken(admin.Email, admin.UserId, admin.Role);
                 return token;
             }
             else
@@ -59,14 +59,14 @@ namespace RepositoryLayer.Services
         }
         public ForgotPasswordModel ForgotPassword(string email)
         {
-            var admin = _dbContext.Admins.ToList().Find(admin => admin.Email == email);
+            var admin = _dbContext.Users.ToList().Find(admin => admin.Email == email);
             if (admin == null)
             {
                 return null;
             }
             else
             {
-                var token = _tokenService.GenerateToken(admin.Email, admin.AdminId, admin.Role);
+                var token = _tokenService.GenerateToken(admin.Email, admin.UserId, admin.Role);
                 ForgotPasswordModel adminForgotPasswordModel = new ForgotPasswordModel();
                 adminForgotPasswordModel.Email = email;
                 adminForgotPasswordModel.Token = token;
@@ -76,7 +76,7 @@ namespace RepositoryLayer.Services
 
         public bool ResetPassword(string email, ResetPasswordModel model)
         {
-            var admin = _dbContext.Admins.ToList().Find(admin => admin.Email == email);
+            var admin = _dbContext.Users.ToList().Find(admin => admin.Email == email);
             if (admin == null)
             {
                 return false;
@@ -84,7 +84,7 @@ namespace RepositoryLayer.Services
             else
             {
                 admin.Password = EncryptPass.EncodePasswordToBase64(model.ConfirmPassword);
-                _dbContext.Admins.Update(admin);
+                _dbContext.Users.Update(admin);
                 _dbContext.SaveChanges();
                 return true;
             }

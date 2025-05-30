@@ -15,13 +15,13 @@ namespace ManagerLayer.Services
         {
             _adminRepo = adminRepo;
         }
-        public AdminEntity Register(AdminRegisterModel model)
+        public UserEntity Register(AdminRegisterModel model)
         {
             return _adminRepo.Register(model);
         }
-        public string Login(AdminLoginModel model)
+        public string Login(AdminLoginModel model, string role)
         {
-            return _adminRepo.Login(model);
+            return _adminRepo.Login(model, role);
         }
         public ForgotPasswordModel ForgotPassword(string email)
         {

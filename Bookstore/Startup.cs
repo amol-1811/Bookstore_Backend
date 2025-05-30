@@ -45,6 +45,9 @@ namespace Bookstore
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IBookManager, BookManager>();
             services.AddScoped<IBookRepo, BookRepo>();
+            services.AddScoped<ICartManager, CartManager>();
+            services.AddScoped<ICartRepo, CartRepo>();
+            services.AddScoped<ICartItemRepo, CartItemRepo>();
             services.AddScoped<TokenService>();
 
             services.AddSwaggerGen(

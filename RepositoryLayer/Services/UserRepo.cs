@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using Microsoft.Extensions.Configuration;
@@ -52,21 +53,23 @@ namespace RepositoryLayer.Services
             };
         }
 
-        public UserLoginResponseModel Login(UserLoginModel model)
+        public UserLoginResponseModel Login(UserLoginModel model, string role)
         {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Email == model.Email && u.Password == EncryptPass.EncodePasswordToBase64(model.Password));
+            var user = _dbContext.Users.FirstOrDefault(u => u.Role == role 
+                            && u.Email == model.Email 
+                            && u.Password == EncryptPass.EncodePasswordToBase64(model.Password));
             if (user == null)
             {
                 return null;
             }
-                _dbContext.SaveChanges();
+            _dbContext.SaveChanges();
 
-                return new UserLoginResponseModel
-                {
-                    Token = _tokenService.GenerateToken(user.Email, user.UserId, user.Role),
-                    FullName = user.FullName,
-                    Email = user.Email,
-                };
+            return new UserLoginResponseModel
+            {
+                Token = _tokenService.GenerateToken(user.Email, user.UserId, user.Role),
+                FullName = user.FullName,
+                Email = user.Email,
+            };
         }
 
         public ForgotPasswordModel ForgotPassword(string email)

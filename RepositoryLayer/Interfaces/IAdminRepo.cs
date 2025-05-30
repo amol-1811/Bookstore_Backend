@@ -8,8 +8,8 @@ namespace RepositoryLayer.Interfaces
 {
     public interface IAdminRepo
     {
-        AdminEntity Register(AdminRegisterModel model);
-        string Login(AdminLoginModel model);
+        UserEntity Register(AdminRegisterModel model);
+        string Login(AdminLoginModel model, string role);
         ForgotPasswordModel ForgotPassword(string email);
         bool ResetPassword(string email, ResetPasswordModel model);
     }

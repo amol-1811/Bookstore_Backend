@@ -21,9 +21,9 @@ namespace ManagerLayer.Services
             return _userRepo.Register(model);
         }
 
-        public UserLoginResponseModel Login(UserLoginModel model)
+        public UserLoginResponseModel Login(UserLoginModel model, string role)
         {
-            return _userRepo.Login(model);
+            return _userRepo.Login(model, role);
         }
 
         public ForgotPasswordModel ForgotPassword(string email)
