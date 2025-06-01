@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using RepositoryLayer.Models;
+using static RepositoryLayer.Models.UpdatecartModel;
 
 namespace ManagerLayer.Interfaces
 {
@@ -13,6 +14,7 @@ namespace ManagerLayer.Interfaces
         public CartModel createCart(int userId);
 
         public CartModel addToCart(int userId, AddToCartModel addToCartModel);
+        CartModel updateCart(int userId, UpdateCartModel updateCartModel);
 
         public ICollection<CartModel> getAllCarts();
 

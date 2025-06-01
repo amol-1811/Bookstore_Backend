@@ -48,6 +48,8 @@ namespace Bookstore
             services.AddScoped<ICartManager, CartManager>();
             services.AddScoped<ICartRepo, CartRepo>();
             services.AddScoped<ICartItemRepo, CartItemRepo>();
+            services.AddScoped<IWishlistManager, WishlistManager>();
+            services.AddScoped<IWishlistRepo, WishlistRepo>();
             services.AddScoped<TokenService>();
 
             services.AddSwaggerGen(

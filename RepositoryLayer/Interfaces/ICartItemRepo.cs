@@ -9,6 +9,7 @@ namespace RepositoryLayer.Interfaces
     public interface ICartItemRepo
     {
         public CartItemEntity save(CartItemEntity entity);
+        public CartItemEntity update(CartItemEntity entity);
 
         public ICollection<CartItemEntity> getByCartId(int cartId);
 

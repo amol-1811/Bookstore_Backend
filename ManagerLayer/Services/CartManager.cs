@@ -5,6 +5,7 @@ using ManagerLayer.Interfaces;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interfaces;
 using RepositoryLayer.Models;
+using static RepositoryLayer.Models.UpdatecartModel;
 
 namespace ManagerLayer.Services
 {
@@ -50,7 +51,7 @@ namespace ManagerLayer.Services
                         bookModel.BookImage = cartItemEntity.Book.BookImage;
                         bookModel.Description = cartItemEntity.Book.Description;
                         bookModel.BookName = cartItemEntity.Book.BookName;
-                        bookModel.CreatedAt = cartItemEntity.Book.CreatedAt;
+                        bookModel.CreatedAt = cartItemEntity.Book.CreatedAt;        
                         bookModel.UpdatedAt = cartItemEntity.Book.UpdatedAt;
 
                         cartItemModel.BookModel = bookModel;
@@ -107,31 +108,42 @@ namespace ManagerLayer.Services
 
         public CartModel addToCart(int userId, AddToCartModel addToCartModel)
         {
-            try {
+            try
+            {
                 CartEntity entity = cartRepo.getCartByUserId(userId);
                 if (entity == null)
                 {
-                    throw new Exception($"Failed to add item to Cart because Cart does not exists with ID: {entity.CartId}");
+                    throw new Exception($"Failed to add item to Cart because Cart does not exist for user: {userId}");
                 }
 
                 BookEntity bookEntity = bookRepo.GetBookById(addToCartModel.BookId);
 
                 if (bookEntity != null)
                 {
-                    CartItemEntity cartItemEntity = new CartItemEntity();
-                    cartItemEntity.Quantity = addToCartModel.Quantity;
-                    cartItemEntity.Price = bookEntity.Price * addToCartModel.Quantity;
-                    cartItemEntity.CartId = cartItemEntity.CartId;
-                    cartItemEntity.BookId = bookEntity.BookId;
-                    cartItemEntity.IsPurchased = false;
+                    var existingCartItem = entity.CartItems.FirstOrDefault(ci => ci.BookId == addToCartModel.BookId);
 
-                    entity.CartItems.Add(cartItemEntity);
+                    if (existingCartItem != null)
+                    {
+                        existingCartItem.Quantity += 1;
+                        existingCartItem.Price = bookEntity.Price * existingCartItem.Quantity;
+                        cartItemRepo.update(existingCartItem);
+                    }
+                    else
+                    {
+                        CartItemEntity cartItemEntity = new CartItemEntity();
+                        cartItemEntity.Quantity = 1;
+                        cartItemEntity.Price = bookEntity.Price * 1;
+                        cartItemEntity.CartId = entity.CartId;
+                        cartItemEntity.BookId = bookEntity.BookId;
+                        cartItemEntity.IsPurchased = false;
 
-                    cartItemRepo.save(cartItemEntity);
+                        entity.CartItems.Add(cartItemEntity);
+                        cartItemRepo.save(cartItemEntity);
+                    }
                 }
                 else
                 {
-                    throw new Exception($"Requested Books [ID: {addToCartModel.BookId}] does not exists");
+                    throw new Exception($"Requested Books [ID: {addToCartModel.BookId}] does not exist");
                 }
 
                 return map(cartRepo.getCartByUserId(userId));
@@ -140,6 +152,55 @@ namespace ManagerLayer.Services
             catch (Exception e)
             {
                 throw new Exception($"Failed to add item in cart => {e.Message}");
+            }
+        }
+
+        public CartModel updateCart(int userId, UpdateCartModel updateCartModel)
+        {
+            try
+            {
+                CartEntity entity = cartRepo.getCartByUserId(userId);
+                if (entity == null)
+                {
+                    throw new Exception($"Failed to update cart because Cart does not exist for user: {userId}");
+                }
+
+                BookEntity bookEntity = bookRepo.GetBookById(updateCartModel.BookId);
+
+                if (bookEntity != null)
+                {
+                    var existingCartItem = entity.CartItems.FirstOrDefault(ci => ci.BookId == updateCartModel.BookId);
+
+                    if (existingCartItem != null)
+                    {
+                        existingCartItem.Quantity += updateCartModel.Quantity;
+                        existingCartItem.Price = bookEntity.Price * updateCartModel.Quantity;
+                        cartItemRepo.update(existingCartItem);
+                    }
+                    else
+                    {
+                        CartItemEntity cartItemEntity = new CartItemEntity();
+                        cartItemEntity.Quantity = updateCartModel.Quantity;
+                        cartItemEntity.Price = bookEntity.Price * updateCartModel.Quantity;
+                        cartItemEntity.CartId = entity.CartId;
+                        cartItemEntity.BookId = bookEntity.BookId;
+                        cartItemEntity.IsPurchased = false;
+
+                        entity.CartItems.Add(cartItemEntity);
+                        cartItemRepo.save(cartItemEntity);
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Requested Book [ID: {updateCartModel.BookId}] does not exist");
+                }
+
+                return map(cartRepo.getCartByUserId(userId));
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Failed to update cart => {e.Message}");
             }
         }
 

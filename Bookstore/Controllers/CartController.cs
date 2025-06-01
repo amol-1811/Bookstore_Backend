@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryLayer.Migrations;
 using RepositoryLayer.Models;
+using static RepositoryLayer.Models.UpdatecartModel;
 
 namespace Bookstore.Controllers
 {
@@ -83,6 +84,30 @@ namespace Bookstore.Controllers
                 if (role != null && (role == "Admin" || role == "User"))
                 {
                     cartModel = _manager.addToCart(userId, addToCartModel);
+                    return Ok(new ResponseModel<CartModel> { IsSuccess = true, Data = cartModel });
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("/update-cart")]
+        public IActionResult updateCart([FromBody] UpdateCartModel updateCartModel)
+        {
+            CartModel cartModel;
+            try
+            {
+                int userId = int.Parse(User.FindFirst("UserId").Value);
+                string role = User.FindFirst("Role")?.Value;
+                if (role != null && (role == "Admin" || role == "User"))
+                {
+                    cartModel = _manager.updateCart(userId, updateCartModel);
                     return Ok(new ResponseModel<CartModel> { IsSuccess = true, Data = cartModel });
                 }
                 else

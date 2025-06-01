@@ -34,6 +34,16 @@ namespace RepositoryLayer.Services
                 .First();
         }
 
+        public CartItemEntity update(CartItemEntity entity)
+        {
+            _dbcontext.CartItems.Update(entity);
+            _dbcontext.SaveChanges();
+            return _dbcontext.CartItems
+                .Include(x => x.Book)
+                .Where(c => c.CartItemId == entity.CartItemId)
+                .First();
+        }
+
         public ICollection<CartItemEntity> getByCartId(int cartId)
         {
             return _dbcontext.CartItems

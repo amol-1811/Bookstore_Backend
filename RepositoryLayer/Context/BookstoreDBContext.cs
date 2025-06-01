@@ -13,7 +13,7 @@ namespace RepositoryLayer.Context
         public DbSet<AdminEntity> Admins { get; set; }
         public DbSet<BookEntity> Books { get; set; }
         public DbSet<CartEntity> Cart { get; set; }
-
         public DbSet<CartItemEntity> CartItems { get; set; }
+        public DbSet<WishlistEntity> Wishlist { get; set; }
     }
 }
