@@ -15,5 +15,7 @@ namespace RepositoryLayer.Context
         public DbSet<CartEntity> Cart { get; set; }
         public DbSet<CartItemEntity> CartItems { get; set; }
         public DbSet<WishlistEntity> Wishlist { get; set; }
+        public DbSet<CustomerEntity> Customer { get; set; }
+        public DbSet<OrderEntity> Order { get; set; }
     }
 }

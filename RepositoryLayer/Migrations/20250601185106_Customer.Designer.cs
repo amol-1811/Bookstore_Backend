@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RepositoryLayer.Context;
 
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(BookstoreDBContext))]
-    partial class BookstoreDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250601185106_Customer")]
+    partial class Customer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,40 +176,6 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("RepositoryLayer.Entity.OrderEntity", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BooksBookId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UsersUserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderId");
-
-                    b.HasIndex("BooksBookId");
-
-                    b.HasIndex("UsersUserId");
-
-                    b.ToTable("Order");
-                });
-
             modelBuilder.Entity("RepositoryLayer.Entity.UserEntity", b =>
                 {
                     b.Property<int>("UserId")
@@ -288,17 +256,6 @@ namespace RepositoryLayer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("RepositoryLayer.Entity.OrderEntity", b =>
-                {
-                    b.HasOne("RepositoryLayer.Entity.BookEntity", "Books")
-                        .WithMany()
-                        .HasForeignKey("BooksBookId");
-
-                    b.HasOne("RepositoryLayer.Entity.UserEntity", "Users")
-                        .WithMany()
-                        .HasForeignKey("UsersUserId");
                 });
 
             modelBuilder.Entity("RepositoryLayer.Entity.WishlistEntity", b =>
