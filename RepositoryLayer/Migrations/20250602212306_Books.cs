@@ -20,7 +20,7 @@ namespace RepositoryLayer.Migrations
                     DiscountPrice = table.Column<decimal>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     BookImage = table.Column<string>(nullable: true),
-                    AdminId = table.Column<int>(nullable: true),
+                    AdminId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false)
                 },

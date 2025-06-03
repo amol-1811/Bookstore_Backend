@@ -10,7 +10,6 @@ using RepositoryLayer.Context;
 using RepositoryLayer.EncodePassword;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interfaces;
-using RepositoryLayer.Migrations;   
 using RepositoryLayer.Models;
 
 namespace RepositoryLayer.Services

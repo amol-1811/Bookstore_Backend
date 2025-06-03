@@ -4,7 +4,6 @@ using ManagerLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryLayer.Entity;
-using RepositoryLayer.Migrations;
 using RepositoryLayer.Models;
 
 namespace Bookstore.Controllers

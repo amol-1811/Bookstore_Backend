@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interfaces;
-using RepositoryLayer.Migrations;
 using RepositoryLayer.Models;
 
 namespace RepositoryLayer.Services
@@ -26,7 +25,7 @@ namespace RepositoryLayer.Services
         public CartItemEntity save(CartItemEntity entity)
         {
             EntityEntry<CartItemEntity> s = _dbcontext.CartItems.Add(entity);
-            
+
             _dbcontext.SaveChanges();
             return _dbcontext.CartItems
                 .Include(x => x.Book)
@@ -48,7 +47,7 @@ namespace RepositoryLayer.Services
         {
             return _dbcontext.CartItems
                 .Include(x => x.Book)
-                .Where(cartItem =>  cartItem.CartId == cartId)
+                .Where(cartItem => cartItem.CartId == cartId)
                 .ToList();
         }
 

@@ -6,23 +6,23 @@ using System.Text;
 
 namespace RepositoryLayer.Entity
 {
-    public class OrderEntity
+    public class OrdersEntity
     {
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderId { get; set; }
 
+        [ForeignKey("Users")]
         public int UserId { get; set; }
 
+        [ForeignKey("Books")]
         public int BookId { get; set; }
 
         public decimal Price { get; set; }
 
         public DateTime OrderDate { get; set; }
-
-        public UserEntity Users { get; set; }
-
-        public BookEntity Books { get; set; }
-
+        public UserEntity User { get; set; }
+        public BookEntity Book { get; set; }
     }
 }

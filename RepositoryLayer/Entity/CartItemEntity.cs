@@ -11,9 +11,9 @@ namespace RepositoryLayer.Entity
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CartItemId { get; set; }
-
         public BookEntity Book { get; set; }
         public CartEntity Cart { get; set; }
+
 
         [ForeignKey("Cart")]
         public int CartId { get; set; }

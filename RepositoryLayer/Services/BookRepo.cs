@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entity;
 using RepositoryLayer.Interfaces;
-using RepositoryLayer.Migrations;
 using RepositoryLayer.Models;
 using Microsoft.EntityFrameworkCore;
 

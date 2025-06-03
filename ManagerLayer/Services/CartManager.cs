@@ -125,7 +125,7 @@ namespace ManagerLayer.Services
                     if (existingCartItem != null)
                     {
                         existingCartItem.Quantity += 1;
-                        existingCartItem.Price = bookEntity.Price * existingCartItem.Quantity;
+                        existingCartItem.Price = bookEntity.Price; //* existingCartItem.Quantity;
                         cartItemRepo.update(existingCartItem);
                     }
                     else
@@ -181,7 +181,7 @@ namespace ManagerLayer.Services
                     {
                         CartItemEntity cartItemEntity = new CartItemEntity();
                         cartItemEntity.Quantity = updateCartModel.Quantity;
-                        cartItemEntity.Price = bookEntity.Price * updateCartModel.Quantity;
+                        cartItemEntity.Price = bookEntity.Price; //* updateCartModel.Quantity;
                         cartItemEntity.CartId = entity.CartId;
                         cartItemEntity.BookId = bookEntity.BookId;
                         cartItemEntity.IsPurchased = false;

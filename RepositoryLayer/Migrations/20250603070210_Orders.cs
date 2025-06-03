@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RepositoryLayer.Migrations
 {
-    public partial class Order : Migration
+    public partial class Orders : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "Orders",
                 columns: table => new
                 {
                     OrderId = table.Column<int>(nullable: false)
@@ -16,42 +16,40 @@ namespace RepositoryLayer.Migrations
                     UserId = table.Column<int>(nullable: false),
                     BookId = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    OrderDate = table.Column<DateTime>(nullable: false),
-                    UsersUserId = table.Column<int>(nullable: true),
-                    BooksBookId = table.Column<int>(nullable: true)
+                    OrderDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.OrderId);
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_Order_Books_BooksBookId",
-                        column: x => x.BooksBookId,
+                        name: "FK_Orders_Books_BookId",
+                        column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "BookId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Order_Users_UsersUserId",
-                        column: x => x.UsersUserId,
+                        name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_BooksBookId",
-                table: "Order",
-                column: "BooksBookId");
+                name: "IX_Orders_BookId",
+                table: "Orders",
+                column: "BookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_UsersUserId",
-                table: "Order",
-                column: "UsersUserId");
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Orders");
         }
     }
 }

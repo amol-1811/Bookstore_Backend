@@ -41,7 +41,7 @@ namespace Bookstore
                 options.UseSqlServer(Configuration["ConnectionStrings:DbConn"]));
             services.AddScoped<IAdminManager, AdminManager>();
             services.AddScoped<IAdminRepo, AdminRepo>();
-            services.AddScoped<IUserRepo,  UserRepo>();
+            services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IBookManager, BookManager>();
             services.AddScoped<IBookRepo, BookRepo>();
@@ -52,6 +52,8 @@ namespace Bookstore
             services.AddScoped<IWishlistRepo, WishlistRepo>();
             services.AddScoped<ICustomerRepo, CustomerRepo>();
             services.AddScoped<ICustomerManager, CustomerManager>();
+            services.AddScoped<IOrderRepo, OrderRepo>();
+            services.AddScoped<IOrderManager, OrderManager>();
             services.AddScoped<TokenService>();
 
             services.AddSwaggerGen(

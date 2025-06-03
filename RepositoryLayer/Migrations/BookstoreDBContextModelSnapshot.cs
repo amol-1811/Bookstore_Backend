@@ -19,33 +19,6 @@ namespace RepositoryLayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("RepositoryLayer.Entity.AdminEntity", b =>
-                {
-                    b.Property<int>("AdminId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AdminId");
-
-                    b.ToTable("Admins");
-                });
-
             modelBuilder.Entity("RepositoryLayer.Entity.BookEntity", b =>
                 {
                     b.Property<int>("BookId")
@@ -174,7 +147,7 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("RepositoryLayer.Entity.OrderEntity", b =>
+            modelBuilder.Entity("RepositoryLayer.Entity.OrdersEntity", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -182,9 +155,6 @@ namespace RepositoryLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BooksBookId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("OrderDate")
@@ -196,16 +166,13 @@ namespace RepositoryLayer.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsersUserId")
-                        .HasColumnType("int");
-
                     b.HasKey("OrderId");
 
-                    b.HasIndex("BooksBookId");
+                    b.HasIndex("BookId");
 
-                    b.HasIndex("UsersUserId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("RepositoryLayer.Entity.UserEntity", b =>
@@ -290,15 +257,19 @@ namespace RepositoryLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("RepositoryLayer.Entity.OrderEntity", b =>
+            modelBuilder.Entity("RepositoryLayer.Entity.OrdersEntity", b =>
                 {
-                    b.HasOne("RepositoryLayer.Entity.BookEntity", "Books")
+                    b.HasOne("RepositoryLayer.Entity.BookEntity", "Book")
                         .WithMany()
-                        .HasForeignKey("BooksBookId");
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("RepositoryLayer.Entity.UserEntity", "Users")
+                    b.HasOne("RepositoryLayer.Entity.UserEntity", "User")
                         .WithMany()
-                        .HasForeignKey("UsersUserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("RepositoryLayer.Entity.WishlistEntity", b =>
